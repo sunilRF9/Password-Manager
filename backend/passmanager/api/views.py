@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from .models import Structure
 from .serializers import StructureSerializer
 from .enc import encrypt_message, decrypt_message
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 class StructureView(APIView):
     def get(self, request, *args, **kwargs):
@@ -20,9 +22,16 @@ class StructureView(APIView):
         ser = StructureSerializer(new_pass)
         return Response(ser.data)
 
-
-def detailView(request, passphrase):
-    qs = Structure.objects.filter(passphrase=passphrase)
-    ser = StructureSerializer(qs, many=True)
-    return Response(ser.data)
-
+@api_view(('GET',))
+def retrieve_password(request, passphrase, platform):
+    try:
+        qs = Structure.objects.filter(passphrase=passphrase).filter(title=platform)
+        for q in qs:
+            encrypted_password = q.passwd
+        encrypted_password = eval(encrypted_password) 
+        decrypted_password = decrypt_message(encrypted_password)
+        res = {"decrypted_password" : decrypted_password }
+        return Response(res)
+    except:
+        res = {"response" : "invalid passphrase or platform name" }
+        return Response(res)

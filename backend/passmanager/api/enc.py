@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 BASE_DIR = os.getcwd()
 SEC_KEY_FILE = 'secret.key'
 PATH = os.path.join(BASE_DIR, SEC_KEY_FILE)
-
+print(PATH)
 
 def generate_key():
     """
@@ -31,7 +31,7 @@ def load_key():
     """
     Load the previously generated key
     """
-    return open(PATH, "rb").read()
+    return open('/home/coutinho/react-nub/password-manager/backend/passmanager/api/secret.key', "rb").read()
 
 def encrypt_message(message):
     """
@@ -42,7 +42,7 @@ def encrypt_message(message):
     f = Fernet(key)
     encrypted_message = f.encrypt(encoded_message)
 
-    print(encrypted_message)
+    #print(encrypted_message)
     return encrypted_message
 
 def decrypt_message(encrypted_message):
@@ -53,7 +53,8 @@ def decrypt_message(encrypted_message):
     f = Fernet(key)
     decrypted_message = f.decrypt(encrypted_message)
 
-    print(decrypted_message.decode())
+    #print(decrypted_message.decode())
+    return decrypted_message.decode()
 
 if __name__ == "__main__":
     encrypt_message('Hello')
