@@ -31,7 +31,8 @@ yarn-error.log*
 *.pyc
 __pycache__/
 local_settings.py
-db.sqlite3
+/home/coutinho/react-nub/password-manager/backend/passmanager/db.sqlite3
+/home/coutinho/react-nub/password-manager/backend/passmanager/api/secret.key
 db.sqlite3-journal
 media
 
