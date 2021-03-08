@@ -1,9 +1,9 @@
 import './App.css';
+import Form from './Form'
 
 function App() {
   return (
-    <h1>HELLOW</h1>
-    
+    <Form />
   );
 }
 
