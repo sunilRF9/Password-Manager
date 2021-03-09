@@ -1,60 +1,39 @@
-import React, { useState } from "react";
+import React from 'react'
 import "./Form.css";
+import { useForm } from 'react-hook-form'
 import axios from "axios";
 
 const Form = () => {
-  const [person, setPerson] = useState({
-    passwd: "",
-    passphrase: "",
-    username: "",
-    title: "",
-  });
+  const { register, handleSubmit, reset } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //  console.log(
-    //    person.passwd,
-    //    person.passphrase,
-    //    person.username,
-    //    person.title
-    //  );
-    const data = {passwd: person.passwd, passphrase: person.passphrase, username: person.username, title: person.title}
+  const onSubmit = (data) => {
+    console.log(data);
      axios.post('http://127.0.0.1:8000/api/', data).then(response =>
-      console.log(response)).then(error => console.log(error)
+      console.log(response.code)).then(error => console.log(error)
         )
-    setPerson({
-    passwd: "",
-    passphrase: "",
-    username: "",
-    title: "",
-    })
-  };
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value
-    setPerson({ ...person, [name]: value });
+    reset()
+
   };
   return (
     <>
       <div className="login-box">
         <h2>Password Manager</h2>
-        <form onSubmit={handleChange}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="user-box">
             <input
               type="text"
               name='username'
               autoComplete='off'
-              value={person.username}
-              onChange={handleChange}
+              ref = {register}
             />
-            <label>Username</label>
+            <label>Username/Email</label>
           </div>
           <div className="user-box">
             <input
               type="password"
               name='passwd'
-              value={person.passwd}
-              onChange={handleChange}
+              autoComplete='off'
+              ref={register({ required: true, minLength: 6 })}
             />
             <label>Password</label>
           </div>
@@ -62,8 +41,8 @@ const Form = () => {
             <input
               type="password"
               name='passphrase'
-              value={person.passphrase}
-              onChange={handleChange}
+              autoComplete='off'
+              ref={register({ required: true, minLength: 6 })}
             />
             <label>Passphrase</label>
           </div>
@@ -72,21 +51,22 @@ const Form = () => {
               type="text"
               name='title'
               autoComplete='off'
-              value={person.title}
-              onChange={handleChange}
+              ref = {register}
             />
             <label>Platform</label>
           </div>
-          <a onClick={handleSubmit}>
+          <a onClick={handleSubmit(onSubmit)}>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
             Submit
           </a>
+          {/* <button type="submit">Submit</button> */}
         </form>
       </div>
     </>
-  );
-};
-export default Form;
+  )
+}
+
+export default Form
