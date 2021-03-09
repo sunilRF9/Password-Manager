@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./Form.css";
+import axios from "axios";
 
 const Form = () => {
   const [person, setPerson] = useState({
-    password: "",
+    passwd: "",
     passphrase: "",
     username: "",
     title: "",
@@ -11,14 +12,18 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     console.log(
-       person.password,
-       person.passphrase,
-       person.username,
-       person.title
-     );
+    //  console.log(
+    //    person.passwd,
+    //    person.passphrase,
+    //    person.username,
+    //    person.title
+    //  );
+    const data = {passwd: person.passwd, passphrase: person.passphrase, username: person.username, title: person.title}
+     axios.post('http://127.0.0.1:8000/api/', data).then(response =>
+      console.log(response)).then(error => console.log(error)
+        )
     setPerson({
-    password: "",
+    passwd: "",
     passphrase: "",
     username: "",
     title: "",
@@ -38,6 +43,7 @@ const Form = () => {
             <input
               type="text"
               name='username'
+              autoComplete='off'
               value={person.username}
               onChange={handleChange}
             />
@@ -45,16 +51,16 @@ const Form = () => {
           </div>
           <div className="user-box">
             <input
-              type="text"
-              name='password'
-              value={person.password}
+              type="password"
+              name='passwd'
+              value={person.passwd}
               onChange={handleChange}
             />
             <label>Password</label>
           </div>
           <div className="user-box">
             <input
-              type="text"
+              type="password"
               name='passphrase'
               value={person.passphrase}
               onChange={handleChange}
@@ -65,6 +71,7 @@ const Form = () => {
             <input
               type="text"
               name='title'
+              autoComplete='off'
               value={person.title}
               onChange={handleChange}
             />
