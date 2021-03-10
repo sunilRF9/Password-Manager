@@ -1,11 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Form.css'
+import FetchPassword from "./FetchPassword";
 
 const Formsuccess = () => {
+
+  const [gotopass, setGotopass] = useState(false)
+
+  const getPassword = () => {
+    setGotopass(true)
+  }
+
     return (
         <div>
-        <img style={{marginLeft: '550px', paddingTop: '50px'}} src="https://seeklogo.com/images/L/liverpool-fc-logo-3B886CFE17-seeklogo.com.png" alt="lfc"/>
-            {/* <h2 style={{marginTop:'200px', textAlign: 'center', color: 'white'}}>Password Stored</h2> */}
+      {gotopass ? <FetchPassword /> : 
+      <div className="login-box">
+        <h2>Password Stored</h2>
+        <form >
+          <a href="" style={{textAlign: 'center', marginLeft: '90px'}}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Return
+          </a>
+          <a onClick={getPassword}style={{textAlign: 'center', marginLeft: '50px'}}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Get Password
+          </a>
+          {/* <button type="submit">Submit</button> */}
+        </form>
+      </div>
+}
         </div>
     )
 }
