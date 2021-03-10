@@ -60,7 +60,7 @@ const Formsignup = ({submitForm}) => {
             />
             <label>Platform</label>
           </div>
-          <a onClick={handleSubmit(onSubmit)}>
+          <a style={{marginLeft: '90px'}} onClick={handleSubmit(onSubmit)}>
             <span></span>
             <span></span>
             <span></span>
