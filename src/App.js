@@ -1,10 +1,19 @@
-import './App.css';
-import Form from './Form'
+import "./App.css";
+import Formsignup from "./Form";
+import React, { useState } from "react";
+import Formsuccess from "./Formsuccess";
 
 function App() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const submitForm = () => {
+    setIsSubmitted(true);
+  };
+
   return (
-    <Form />
+    <div>
+      {!isSubmitted ? <Formsignup submitForm={submitForm} /> : <Formsuccess />}
+    </div>
   );
 }
-
 export default App;
